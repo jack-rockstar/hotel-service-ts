@@ -1,0 +1,29 @@
+version: "3.8"
+
+services:
+
+  hotel_db:
+    image: postgres
+    container_name: hotel-service-db
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      - DATABASE_HOST=127.0.0.1
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=hotel
+      - POSTGRES_DB=hotel_db
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: hotel-pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "jacknajarro1@gmail.com"
+      PGADMIN_DEFAULT_PASSWORD: "admin"
+    ports:
+      - "5050:80"
+    depends_on:
+      - hotel_db
+volumes:
+  postgres-data:
