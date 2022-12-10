@@ -4,6 +4,7 @@ import cors from 'cors'
 import { UserRoutes } from './user/user.router'
 import { ConfigServer } from './config/config'
 import { RoomRoutes } from './room/room.router'
+import { RoomTypeRoutes } from './roomType/roomType.router'
 
 class Server extends ConfigServer {
   public app: express.Application = express()
@@ -26,7 +27,10 @@ class Server extends ConfigServer {
   }
 
   routes (): express.Router[] {
-    return [new UserRoutes().router, new RoomRoutes().router]
+    return [new UserRoutes().router,
+      new RoomRoutes().router,
+      new RoomTypeRoutes().router
+    ]
   }
 
   public listen (): void {

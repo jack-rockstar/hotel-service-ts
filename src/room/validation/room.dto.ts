@@ -1,5 +1,6 @@
 import { IsNotEmpty } from 'class-validator'
 import { BaseDto } from '../../config/base.dto'
+import { RoomTypeEntity } from '../../roomType/entities/roomType.entity'
 export class RoomDto extends BaseDto {
   @IsNotEmpty()
     numberRoom!: string
@@ -12,4 +13,7 @@ export class RoomDto extends BaseDto {
 
   @IsNotEmpty()
     priceRoom!: number
+
+  @IsNotEmpty()
+    roomType!: RoomTypeEntity
 }
