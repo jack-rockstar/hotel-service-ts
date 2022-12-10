@@ -1,7 +1,7 @@
 import * as dotenv from 'dotenv'
 import path from 'path'
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies'
-import { ConnectionOptions } from 'typeorm'
+import { Connection, ConnectionOptions, createConnection } from 'typeorm'
 
 export abstract class ConfigServer {
   constructor () {
@@ -47,5 +47,9 @@ export abstract class ConfigServer {
       namingStrategy: new SnakeNamingStrategy()
 
     }
+  }
+
+  async dbConnect (): Promise<Connection> {
+    return await createConnection(this.typeORMConfig)
   }
 }
