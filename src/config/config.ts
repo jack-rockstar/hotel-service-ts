@@ -1,7 +1,6 @@
 import * as dotenv from 'dotenv'
-import path from 'path'
-import { SnakeNamingStrategy } from 'typeorm-naming-strategies'
-import { Connection, ConnectionOptions, createConnection } from 'typeorm'
+import { DataSource } from 'typeorm'
+import { AppDataSource } from './data.source'
 
 export abstract class ConfigServer {
   constructor () {
@@ -32,24 +31,7 @@ export abstract class ConfigServer {
     return `.${arrEnv.join('.')}`
   }
 
-  public get typeORMConfig (): ConnectionOptions {
-    return {
-      type: 'postgres',
-      host: this.getEnviroment('DB_HOST'),
-      port: this.getNumberEnv('DB_PORT'),
-      username: this.getEnviroment('DB_USER'),
-      password: this.getEnviroment('DB_PASSWORD'),
-      database: this.getEnviroment('DB_POSTGRES_DB'),
-      entities: [`${path.join(__dirname)}/../**/*.entity{.ts, .js}`],
-      migrations: [`${path.join(__dirname)}/../../migrations/*{.ts, .js}`],
-      synchronize: true,
-      logging: false,
-      namingStrategy: new SnakeNamingStrategy()
-
-    }
-  }
-
-  async dbConnect (): Promise<Connection> {
-    return await createConnection(this.typeORMConfig)
+  get initConnect (): Promise<DataSource> {
+    return AppDataSource.initialize()
   }
 }

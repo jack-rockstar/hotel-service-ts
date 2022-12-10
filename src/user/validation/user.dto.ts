@@ -30,3 +30,9 @@ export class UserDto extends BaseDto {
   @IsNotEmpty()
     password!: string
 }
+
+export enum RoleType {
+  USER = 'USER',
+  ADMIN = 'ADMIN',
+  QUOTEER = 'QUOTEER'
+}
