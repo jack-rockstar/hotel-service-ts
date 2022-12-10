@@ -29,7 +29,7 @@ export class GuestEntity extends BaseEntity {
     phone?: string
 
   @Column({ nullable: true })
-    email!: string
+    email?: string
 
   @OneToMany(() => RentalEntity, (rental) => rental.guest)
     rentals!: RentalEntity[]
