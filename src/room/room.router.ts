@@ -7,12 +7,12 @@ export class RoomRoutes extends BaseRoutes<RoomController> {
   }
 
   routes (): any {
-    this.router.get('/room', (req, res) => {
+    this.router.get('/rooms', (req, res) => {
       this.controller.getRooms(req, res)
         .then(response => console.log(response))
         .catch((err: string) => console.log(`error getRoom: ${err}`))
     })
-    this.router.get('/Room/:id', (req, res) => {
+    this.router.get('/room/:id', (req, res) => {
       this.controller.getRoomById(req, res)
         .then((response: any) => console.log(response))
         .catch((err: string) => console.log(`error RoomId: ${err}`))
