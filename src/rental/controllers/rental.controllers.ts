@@ -1,8 +1,10 @@
 import { Request, Response } from 'express'
+import { HttpResponse } from '../../shared/response/http.response'
 import { RentalService } from '../services/rental.services'
 
 export class RentalController {
   private readonly rentalService: RentalService = new RentalService()
+  private readonly httpReponse: HttpResponse = new HttpResponse()
 
   async getRentals (_req: Request, res: Response): Promise<any> {
     try {
@@ -32,11 +34,14 @@ export class RentalController {
   async createRental (req: Request, res: Response): Promise<any> {
     try {
       console.log('===INITIALIZING API CREATE RENTAL===')
-
       const data = await this.rentalService.createRental(req.body)
-      return res.status(200).json(data)
-    } catch (error) {
-      return res.status(404).json(error)
+      if (data.driverError?.name === 'error') {
+        return this.httpReponse.NotFound(res, data)
+      }
+      return this.httpReponse.Ok(res, data)
+    } catch (error: object | any) {
+      console.log(error)
+      return this.httpReponse.Error(res, error)
     } finally {
       console.log('===END API CREATE RENTAL===')
     }

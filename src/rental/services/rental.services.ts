@@ -18,9 +18,15 @@ export class RentalService extends BaseService<RentalEntity> {
     return await repository.findOne({ where: { id } })
   }
 
-  async createRental (body: RentalDto): Promise<RentalEntity> {
+  async createRental (body: RentalDto): Promise<RentalEntity | any> {
     const repository = await this.execRepository
-    return await repository.save(body)
+    try {
+      const data = await repository.save(body)
+      return data
+    } catch (error) {
+      console.log(error)
+      return error
+    }
   }
 
   async deleteRental (id: string): Promise<DeleteResult> {

@@ -18,9 +18,15 @@ export class GuestService extends BaseService<GuestEntity> {
     return await repository.findOne({ where: { id } })
   }
 
-  async createGuest (body: GuestDto): Promise<GuestEntity> {
+  async createGuest (body: GuestDto): Promise<GuestEntity | any> {
     const repository = await this.execRepository
-    return await repository.save(body)
+    try {
+      const data = await repository.save(body)
+      return data
+    } catch (error) {
+      console.log(error)
+      return error
+    }
   }
 
   async deleteGuest (id: string): Promise<DeleteResult> {

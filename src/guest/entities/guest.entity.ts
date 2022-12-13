@@ -31,6 +31,6 @@ export class GuestEntity extends BaseEntity {
   @Column({ nullable: true })
     email?: string
 
-  @OneToMany(() => RentalEntity, (rental) => rental.guest)
+  @OneToMany(() => RentalEntity, (rental) => rental.guest, { eager: true })
     rentals!: RentalEntity[]
 }

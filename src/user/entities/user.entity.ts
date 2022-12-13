@@ -40,6 +40,6 @@ export class UserEntity extends BaseEntity {
   @Column({ type: 'enum', enum: RoleType, nullable: false })
     role!: RoleType
 
-  @OneToMany(() => RentalEntity, (rental) => rental.user)
+  @OneToMany(() => RentalEntity, (rental) => rental.user, { eager: true })
     rentals!: RentalEntity[]
 }

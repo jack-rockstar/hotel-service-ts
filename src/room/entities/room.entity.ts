@@ -5,7 +5,7 @@ import { RoomTypeEntity } from '../../roomType/entities/roomType.entity'
 
 @Entity({ name: 'ROOM' })
 export class RoomEntity extends BaseEntity {
-  @Column()
+  @Column({ unique: true })
     numberRoom!: string
 
   @Column()
@@ -17,10 +17,10 @@ export class RoomEntity extends BaseEntity {
   @Column()
     priceRoom!: number
 
-  @ManyToOne(() => RoomTypeEntity, (roomType) => roomType.bedRooms)
+  @ManyToOne(() => RoomTypeEntity, (roomType) => roomType.bedRooms, { nullable: false })
   @JoinColumn({ name: 'room_type_id' })
     roomType!: RoomTypeEntity
 
-  @OneToMany(() => RentalEntity, (rental) => rental.room)
+  @OneToMany(() => RentalEntity, (rental) => rental.room, { eager: true })
     rentals!: RentalEntity[]
 }

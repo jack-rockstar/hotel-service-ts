@@ -9,6 +9,15 @@ export class RentalEntity extends BaseEntity {
   @Column()
     status!: string
 
+  @Column({ name: 'room_id', nullable: false })
+    roomId!: string
+
+  @Column({ name: 'guest_id', nullable: false })
+    guestId!: string
+
+  @Column({ name: 'user_id', nullable: false })
+    userId!: string
+
   @ManyToOne(() => RoomEntity, (room) => room.rentals)
   @JoinColumn({ name: 'room_id' })
     room!: RoomEntity

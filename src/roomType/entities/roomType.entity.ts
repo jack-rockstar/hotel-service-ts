@@ -13,6 +13,6 @@ export class RoomTypeEntity extends BaseEntity {
   @Column()
     features!: string
 
-  @OneToMany(() => RoomEntity, (RoomEntity) => RoomEntity.roomType)
+  @OneToMany(() => RoomEntity, (RoomEntity) => RoomEntity.roomType, { eager: true })
     bedRooms!: RoomEntity[]
 }

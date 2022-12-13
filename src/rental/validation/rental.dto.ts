@@ -6,6 +6,15 @@ export class RentalDto extends BaseDto {
     status!: string
 
   @IsNotEmpty()
+    roomId!: string
+
+  @IsNotEmpty()
+    guestId!: string
+
+  @IsNotEmpty()
+    userId!: string
+
+  @IsNotEmpty()
     admissionDate!: Date
 
   @IsNotEmpty()

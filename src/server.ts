@@ -7,6 +7,8 @@ import { ConfigServer } from './config/config'
 import { RoomRoutes } from './room/room.router'
 import { RoomTypeRoutes } from './roomType/roomType.router'
 import { DataSource } from 'typeorm'
+import { RentalRoutes } from './rental/rental.router'
+import { GuestRoutes } from './guest/guest.router'
 
 export class Server extends ConfigServer {
   public app: express.Application = express()
@@ -28,7 +30,9 @@ export class Server extends ConfigServer {
   routes (): express.Router[] {
     return [new UserRoutes().router,
       new RoomRoutes().router,
-      new RoomTypeRoutes().router
+      new RoomTypeRoutes().router,
+      new RentalRoutes().router,
+      new GuestRoutes().router
     ]
   }
 
