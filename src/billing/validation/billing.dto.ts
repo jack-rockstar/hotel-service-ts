@@ -1,8 +1,9 @@
 import { BaseDto } from '../../config/base.dto'
 import { IsNotEmpty } from 'class-validator'
+import { RentalEntity } from '../../rental/entities/rental.entity'
 export class BillingDto extends BaseDto {
   @IsNotEmpty()
-    rental!: string
+    rental!: RentalEntity
 
   @IsNotEmpty()
     voucherId!: string
