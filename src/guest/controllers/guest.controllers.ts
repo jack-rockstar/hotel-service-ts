@@ -1,4 +1,5 @@
 import { Request, Response } from 'express'
+import { DeleteResult, UpdateResult } from 'typeorm'
 import { HttpResponse } from '../../shared/response/http.response'
 import { GuestService } from '../services/guest.service'
 
@@ -10,9 +11,12 @@ export class GuestController {
     try {
       console.log('===INITIALIZING API GET GUEST===')
       const data = await this.guestService.findAllGuest()
-      return res.status(200).json(data)
+      if (data.length === 0) return this.httpReponse.NotFound(res, 'No existe informacion')
+
+      return this.httpReponse.Ok(res, data)
     } catch (error) {
-      return res.status(404).json(error)
+      console.log(error)
+      return this.httpReponse.Error(res, error)
     } finally {
       console.log('===END API GET GUEST===')
     }
@@ -23,9 +27,12 @@ export class GuestController {
       console.log('===INITIALIZING API GET GUEST BY ID===')
       const { id } = req.params
       const data = await this.guestService.findGuestById(id)
-      return res.status(200).json(data)
+      if (data == null) {
+        return this.httpReponse.NotFound(res, 'No se encontro informacion con el ID especificado')
+      }
+      return this.httpReponse.Ok(res, data)
     } catch (error) {
-      return res.status(404).json(error)
+      return this.httpReponse.Error(res, error)
     } finally {
       console.log('===END API GET  GUEST BY ID===')
     }
@@ -51,10 +58,13 @@ export class GuestController {
     try {
       console.log('===INITIALIZING API GET UPDATE GUEST===')
       const { id } = req.params
-      const data = await this.guestService.updateGuest(id, req.body)
-      return res.status(200).json(data)
+      const data: UpdateResult | null = await this.guestService.updateGuest(id, req.body)
+
+      if (data == null) return this.httpReponse.NotFound(res, 'No se encontro informacion con el ID especificado')
+
+      return this.httpReponse.Ok(res, data)
     } catch (error) {
-      return res.status(404).json(error)
+      return this.httpReponse.Error(res, error)
     } finally {
       console.log('===END API GET UPDATE GUEST===')
     }
@@ -65,10 +75,11 @@ export class GuestController {
       console.log('===INITIALIZING API GET DELETE GUEST===')
 
       const { id } = req.params
-      const data = await this.guestService.deleteGuest(id)
-      return res.status(200).json(data)
+      const data: DeleteResult | null = await this.guestService.deleteGuest(id)
+      if (data == null) return this.httpReponse.NotFound(res, 'No se encontro informacion con el ID especificado')
+      return this.httpReponse.Ok(res, data)
     } catch (error) {
-      return res.status(404).json(error)
+      return this.httpReponse.Error(res, error)
     } finally {
       console.log('===END API GET DELETE GUEST===')
     }

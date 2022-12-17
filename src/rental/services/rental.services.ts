@@ -15,7 +15,15 @@ export class RentalService extends BaseService<RentalEntity> {
 
   async findRentalById (id: string): Promise<RentalEntity | null> {
     const repository = await this.execRepository
-    return await repository.findOne({ where: { id } })
+    try {
+      const data = await repository.findOne({ where: { id } })
+      if (data == null) throw new Error('No se encontro informacion con el ID especificado')
+
+      return data
+    } catch (error) {
+      console.log(error)
+      return null
+    }
   }
 
   async createRental (body: RentalDto): Promise<RentalEntity | any> {
@@ -29,13 +37,29 @@ export class RentalService extends BaseService<RentalEntity> {
     }
   }
 
-  async deleteRental (id: string): Promise<DeleteResult> {
+  async deleteRental (id: string): Promise<DeleteResult | null> {
     const repository = await this.execRepository
-    return await repository.delete({ id })
+    try {
+      const data: DeleteResult = await repository.delete({ id })
+      console.log(data)
+      if (Number(data?.affected) < 1) throw new Error('No se encontro informacion con el ID especificado')
+
+      return data
+    } catch (error) {
+      return null
+    }
   }
 
-  async updateRental (id: string, infoUpdate: RentalEntity): Promise<UpdateResult> {
+  async updateRental (id: string, infoUpdate: RentalEntity): Promise<UpdateResult | null> {
     const repository = await this.execRepository
-    return await repository.update(id, infoUpdate)
+    try {
+      const data = await repository.update(id, infoUpdate)
+      if (data == null) throw new Error('No se encontro informacion con el ID especificado')
+
+      return data
+    } catch (error) {
+      console.log(error)
+      return null
+    }
   }
 }

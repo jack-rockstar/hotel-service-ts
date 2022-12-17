@@ -1,4 +1,5 @@
 import { Request, Response } from 'express'
+import { DeleteResult, UpdateResult } from 'typeorm'
 import { HttpResponse } from '../../shared/response/http.response'
 import { RoomService } from '../services/room.service'
 
@@ -10,9 +11,11 @@ export class RoomController {
     try {
       console.log('===INITIALIZING API GET ROOM===')
       const data = await this.roomService.findAllRoom()
-      return res.status(200).json(data)
+      if (data.length === 0) return this.httpReponse.NotFound(res, 'No existe informacion')
+
+      return this.httpReponse.Ok(res, data)
     } catch (error) {
-      return res.status(404).json(error)
+      return this.httpReponse.Error(res, error)
     } finally {
       console.log('===END API GET ROOM===')
     }
@@ -23,9 +26,12 @@ export class RoomController {
       console.log('===INITIALIZING API GET ROOM BY ID===')
       const { id } = req.params
       const data = await this.roomService.findRoomById(id)
-      return res.status(200).json(data)
+      if (data == null) {
+        return this.httpReponse.NotFound(res, 'No se encontro informacion con el ID especificado')
+      }
+      return this.httpReponse.Ok(res, data)
     } catch (error) {
-      return res.status(404).json(error)
+      return this.httpReponse.Error(res, error)
     } finally {
       console.log('===END API GET  ROOM BY ID===')
     }
@@ -51,10 +57,13 @@ export class RoomController {
     try {
       console.log('===INITIALIZING API GET UPDATE ROOM===')
       const { id } = req.params
-      const data = await this.roomService.updateRoom(id, req.body)
-      return res.status(200).json(data)
+      const data: UpdateResult | null = await this.roomService.updateRoom(id, req.body)
+
+      if (data == null) return this.httpReponse.NotFound(res, 'No se encontro informacion con el ID especificado')
+
+      return this.httpReponse.Ok(res, data)
     } catch (error) {
-      return res.status(404).json(error)
+      return this.httpReponse.Error(res, error)
     } finally {
       console.log('===END API GET UPDATE ROOM===')
     }
@@ -65,10 +74,11 @@ export class RoomController {
       console.log('===INITIALIZING API GET DELETE ROOM===')
 
       const { id } = req.params
-      const data = await this.roomService.deleteRoom(id)
-      return res.status(200).json(data)
+      const data: DeleteResult | null = await this.roomService.deleteRoom(id)
+      if (data == null) return this.httpReponse.NotFound(res, 'No se encontro informacion con el ID especificado')
+      return this.httpReponse.Ok(res, data)
     } catch (error) {
-      return res.status(404).json(error)
+      return this.httpReponse.Error(res, error)
     } finally {
       console.log('===END API GET DELETE ROOM===')
     }

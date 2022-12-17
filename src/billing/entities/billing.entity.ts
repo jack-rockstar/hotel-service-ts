@@ -5,11 +5,14 @@ import { VoucherEntity } from '../../voucher/entities/voucher.entity'
 
 @Entity({ name: 'BILLING' })
 export class BillingEntity extends BaseEntity {
-  @OneToOne(() => RentalEntity, (rental) => rental.id)
+  @OneToOne(() => RentalEntity, (rental) => rental.id, { nullable: false })
   @JoinColumn({ name: 'rental_id' })
     rental!: RentalEntity
 
-  @ManyToOne(() => VoucherEntity, (voucher) => voucher.billings)
+  @Column({ name: 'voucher_id', nullable: false })
+    voucherId!: string
+
+  @ManyToOne(() => VoucherEntity, (voucher) => voucher.billings, { eager: true })
   @JoinColumn({ name: 'voucher_id' })
     voucher!: VoucherEntity
 

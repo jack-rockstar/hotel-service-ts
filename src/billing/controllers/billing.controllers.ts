@@ -1,16 +1,20 @@
 import { Request, Response } from 'express'
+import { DeleteResult, UpdateResult } from 'typeorm'
+import { HttpResponse } from '../../shared/response/http.response'
 import { BillingService } from '../services/billing.service'
 
 export class BillingController {
   private readonly billingService: BillingService = new BillingService()
+  private readonly httpReponse: HttpResponse = new HttpResponse()
 
   async getBillings (_req: Request, res: Response): Promise<any> {
     try {
       console.log('===INITIALIZING API GET BILLING===')
       const data = await this.billingService.findAllBilling()
-      return res.status(200).json(data)
+      if (data.length === 0) return this.httpReponse.NotFound(res, 'No existe informacion')
+      return this.httpReponse.Ok(res, data)
     } catch (error) {
-      return res.status(404).json(error)
+      return this.httpReponse.Error(res, error)
     } finally {
       console.log('===END API GET BILLING===')
     }
@@ -21,9 +25,12 @@ export class BillingController {
       console.log('===INITIALIZING API GET BILLING BY ID===')
       const { id } = req.params
       const data = await this.billingService.findBillingById(id)
-      return res.status(200).json(data)
+      if (data == null) {
+        return this.httpReponse.NotFound(res, 'No se encontro informacion con el ID especificado')
+      }
+      return this.httpReponse.Ok(res, data)
     } catch (error) {
-      return res.status(404).json(error)
+      return this.httpReponse.Error(res, error)
     } finally {
       console.log('===END API GET  BILLING BY ID===')
     }
@@ -34,9 +41,12 @@ export class BillingController {
       console.log('===INITIALIZING API CREATE BILLING===')
 
       const data = await this.billingService.createBilling(req.body)
-      return res.status(200).json(data)
+      if (data.driverError?.name === 'error') {
+        return this.httpReponse.NotFound(res, data.driverError)
+      }
+      return this.httpReponse.Ok(res, data)
     } catch (error) {
-      return res.status(404).json(error)
+      return this.httpReponse.Error(res, error)
     } finally {
       console.log('===END API CREATE BILLING===')
     }
@@ -46,10 +56,12 @@ export class BillingController {
     try {
       console.log('===INITIALIZING API GET UPDATE BILLING===')
       const { id } = req.params
-      const data = await this.billingService.updateBilling(id, req.body)
-      return res.status(200).json(data)
+      const data: UpdateResult | null = await this.billingService.updateBilling(id, req.body)
+      if (data == null) return this.httpReponse.NotFound(res, 'No se encontro informacion con el ID especificado')
+
+      return this.httpReponse.Ok(res, data)
     } catch (error) {
-      return res.status(404).json(error)
+      return this.httpReponse.Error(res, error)
     } finally {
       console.log('===END API GET UPDATE BILLING===')
     }
@@ -60,10 +72,12 @@ export class BillingController {
       console.log('===INITIALIZING API GET DELETE BILLING===')
 
       const { id } = req.params
-      const data = await this.billingService.deleteBilling(id)
-      return res.status(200).json(data)
+      const data: DeleteResult | null = await this.billingService.deleteBilling(id)
+      if (data == null) return this.httpReponse.NotFound(res, 'No se encontro informacion con el ID especificado')
+
+      return this.httpReponse.Ok(res, data)
     } catch (error) {
-      return res.status(404).json(error)
+      return this.httpReponse.Error(res, error)
     } finally {
       console.log('===END API GET DELETE BILLING===')
     }

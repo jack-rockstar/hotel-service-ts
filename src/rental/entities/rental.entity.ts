@@ -1,4 +1,5 @@
-import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm'
+import { Column, Entity, JoinColumn, ManyToOne, OneToOne } from 'typeorm'
+import { BillingEntity } from '../../billing/entities/billing.entity'
 import { BaseEntity } from '../../config/base.entity'
 import { GuestEntity } from '../../guest/entities/guest.entity'
 import { RoomEntity } from '../../room/entities/room.entity'
@@ -35,4 +36,8 @@ export class RentalEntity extends BaseEntity {
 
   @Column()
     departureDate!: Date
+
+  @OneToOne(() => BillingEntity, (billing) => billing.rental, { nullable: true })
+  @JoinColumn({ name: 'billing_id' })
+    billing!: BillingEntity
 }

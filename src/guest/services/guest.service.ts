@@ -10,12 +10,22 @@ export class GuestService extends BaseService<GuestEntity> {
 
   async findAllGuest (): Promise<GuestEntity[]> {
     const repository = await this.execRepository
-    return await repository.find()
+    const data = await repository.find()
+    console.log(data)
+    return data
   }
 
   async findGuestById (id: string): Promise<GuestEntity | null> {
     const repository = await this.execRepository
-    return await repository.findOne({ where: { id } })
+    try {
+      const data = await repository.findOne({ where: { id } })
+      if (data == null) throw new Error('No se encontro informacion con el ID especificado')
+
+      return data
+    } catch (error) {
+      console.log(error)
+      return null
+    }
   }
 
   async createGuest (body: GuestDto): Promise<GuestEntity | any> {
