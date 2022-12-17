@@ -1,9 +1,10 @@
 import { BaseRoutes } from '../shared/routes/routes'
 import { BillingController } from './controllers/billing.controllers'
+import { BillingMiddleware } from './middleware/billing.middleware'
 
-export class BillingRoutes extends BaseRoutes<BillingController> {
+export class BillingRoutes extends BaseRoutes<BillingController, BillingMiddleware> {
   constructor () {
-    super(BillingController)
+    super(BillingController, BillingMiddleware)
   }
 
   routes (): any {
@@ -15,7 +16,7 @@ export class BillingRoutes extends BaseRoutes<BillingController> {
       this.controller.getBillingById(req, res)
         .catch((err: string) => console.log(`error BillingId: ${err}`))
     })
-    this.router.post('/createbilling', (req, res) => {
+    this.router.post('/createbilling', (req, res, next) => [this.middleware.billingValidator(req, res, next)], (req, res) => {
       this.controller.createBilling(req, res)
         .catch((err: string) => console.log(`error createBilling: ${err}`))
     })

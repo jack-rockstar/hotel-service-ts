@@ -1,9 +1,10 @@
 import { BaseRoutes } from '../shared/routes/routes'
 import { RentalController } from './controllers/rental.controllers'
+import { RentalMiddleware } from './middleware/rental.middleware'
 
-export class RentalRoutes extends BaseRoutes<RentalController> {
+export class RentalRoutes extends BaseRoutes<RentalController, RentalMiddleware> {
   constructor () {
-    super(RentalController)
+    super(RentalController, RentalMiddleware)
   }
 
   routes (): any {
@@ -15,7 +16,7 @@ export class RentalRoutes extends BaseRoutes<RentalController> {
       this.controller.getRentalById(req, res)
         .catch((err: string) => console.log(`error RentalId: ${err}`))
     })
-    this.router.post('/createrental', (req, res) => {
+    this.router.post('/createrental', (req, res, next) => [this.middleware.rentalValidator(req, res, next)], (req, res) => {
       this.controller.createRental(req, res)
         .catch((err: string) => console.log(`error createRental: ${err}`))
     })

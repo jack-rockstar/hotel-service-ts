@@ -1,10 +1,11 @@
 import { UserController } from './controllers/user.controllers'
 import { BaseRoutes } from '../shared/routes/routes'
 import { HttpResponse } from '../shared/response/http.response'
+import { UserMiddleware } from './middlewares/user.middleware'
 
-export class UserRoutes extends BaseRoutes<UserController> {
+export class UserRoutes extends BaseRoutes<UserController, UserMiddleware> {
   constructor () {
-    super(UserController)
+    super(UserController, UserMiddleware)
   }
 
   private readonly httpResponse: HttpResponse = new HttpResponse()
@@ -22,7 +23,7 @@ export class UserRoutes extends BaseRoutes<UserController> {
           this.httpResponse.Error(res, err)
         })
     })
-    this.router.post('/createuser', (req, res) => {
+    this.router.post('/createuser', (req, res, next) => [this.middleware.userValidator(req, res, next)], (req, res) => {
       this.controller.createUser(req, res)
         .catch((err: any) => {
           this.httpResponse.Error(res, err)
