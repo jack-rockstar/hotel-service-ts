@@ -4,7 +4,7 @@ services:
 
   hotel_db:
     image: postgres
-    container_name: hotel-service-db
+    container_name: hotel-db
     restart: always
     ports:
       - "5432:5432"
