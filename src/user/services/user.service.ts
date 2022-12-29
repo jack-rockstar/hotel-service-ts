@@ -1,7 +1,8 @@
 import { DeleteResult, UpdateResult } from 'typeorm'
 import { BaseService } from '../../config/base.service'
 import { UserEntity } from '../entities/user.entity'
-import { UserDto } from '../validation/user.dto'
+import { RoleType, UserDto } from '../validation/user.dto'
+import * as bcrypt from 'bcrypt'
 
 export class UserService extends BaseService<UserEntity> {
   constructor () {
@@ -27,10 +28,50 @@ export class UserService extends BaseService<UserEntity> {
     }
   }
 
+  async findUserByEmail (email: string): Promise<UserEntity | null> {
+    const repository = await this.execRepository
+
+    try {
+      return await repository
+        .createQueryBuilder('user')
+        .addSelect('user.password')
+        .where({ email })
+        .getOne()
+    } catch (error) {
+      return null
+    }
+  }
+
+  async findUserByUser (user: string): Promise<UserEntity | null> {
+    const repository = await this.execRepository
+
+    try {
+      return await repository
+        .createQueryBuilder('user')
+        .addSelect('user.password')
+        .where({ user })
+        .getOne()
+    } catch (error) {
+      return null
+    }
+  }
+
+  async findUserWithRole (id: string, role: RoleType): Promise<UserEntity | null> {
+    const repository = await this.execRepository
+    return await repository
+      .createQueryBuilder('user')
+      .where({ id })
+      .andWhere({ role })
+      .getOne()
+  }
+
   async createUser (body: UserDto): Promise<UserEntity | any> {
     const repository = await this.execRepository
     try {
-      const data = await repository.save(body)
+      const newUser = repository.create(body)
+      const hash = await bcrypt.hash(newUser.password, 10)
+      newUser.password = hash
+      const data = await repository.save(newUser)
       return data
     } catch (error) {
       // console.log(error)

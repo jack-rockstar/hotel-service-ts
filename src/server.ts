@@ -11,6 +11,8 @@ import { RentalRoutes } from './rental/rental.router'
 import { GuestRoutes } from './guest/guest.router'
 import { BillingRoutes } from './billing/billing.router'
 import { VoucherRoutes } from './voucher/voucher.router'
+import { LoginStrategy } from './auth/strategies/login.strategy'
+import { JwtStrategy } from './auth/strategies/jwt.strategy'
 
 export class Server extends ConfigServer {
   public app: express.Application = express()
@@ -26,6 +28,7 @@ export class Server extends ConfigServer {
       .catch((e: string) => console.error(`Connection false: ${e}`))
 
     this.app.use('/api/hotel', this.routes())
+    this.passportUser()
     // this.listen()
   }
 
@@ -38,6 +41,10 @@ export class Server extends ConfigServer {
       new BillingRoutes().router,
       new VoucherRoutes().router
     ]
+  }
+
+  passportUser (): any {
+    return [new LoginStrategy().use, new JwtStrategy().use]
   }
 
   async dbConnect (): Promise<DataSource | any> {
