@@ -1,5 +1,5 @@
 import { BaseDto } from '../../config/base.dto'
-import { IsNotEmpty } from 'class-validator'
+import { IsLowercase, IsNotEmpty } from 'class-validator'
 
 export class UserDto extends BaseDto {
   @IsNotEmpty()
@@ -9,9 +9,11 @@ export class UserDto extends BaseDto {
     numberDoc!: string
 
   @IsNotEmpty()
+  @IsLowercase()
     name!: string
 
   @IsNotEmpty()
+  @IsLowercase()
     lastname!: string
 
   @IsNotEmpty()

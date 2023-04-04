@@ -22,8 +22,7 @@ export class UserMiddleware {
     } = req.body
 
     const valid = new UserDto()
-
-    valid.typeDoc = typeDoc
+    valid.typeDoc = typeDoc ?? null
     valid.numberDoc = numberDoc
     valid.name = name
     valid.lastname = lastname
@@ -38,7 +37,7 @@ export class UserMiddleware {
     validate(valid)
       .then(err => {
         if (err.length > 0) {
-          return this.httpReponse.Error(res, err)
+          return this.httpReponse.BadRequest(res, err)
         }
         return next()
       })
