@@ -11,7 +11,6 @@ export class GuestService extends BaseService<GuestEntity> {
   async findAllGuest (): Promise<GuestEntity[]> {
     const repository = await this.execRepository
     const data = await repository.find()
-    console.log(data)
     return data
   }
 

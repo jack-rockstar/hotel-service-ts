@@ -1,15 +1,15 @@
 import { validate } from 'class-validator'
 import { NextFunction, Request, Response } from 'express'
 import { HttpResponse } from '../../shared/response/http.response'
-import { VoucherDto } from '../validation/voucher.dto'
+import { VoucherTypeDto } from '../validation/voucherType.dto'
 
-export class VoucherMiddleware {
+export class VoucherTypeMiddleware {
   private readonly httpReponse: HttpResponse = new HttpResponse()
 
-  voucherValidator (req: Request, res: Response, next: NextFunction): void {
+  voucherTypeValidator (req: Request, res: Response, next: NextFunction): void {
     const { name } = req.body
 
-    const valid = new VoucherDto()
+    const valid = new VoucherTypeDto()
 
     valid.name = name
     validate(valid)

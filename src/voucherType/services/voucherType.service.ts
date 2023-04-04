@@ -1,19 +1,19 @@
 import { DeleteResult, UpdateResult } from 'typeorm'
 import { BaseService } from '../../config/base.service'
-import { VoucherEntity } from '../entities/voucher.entity'
-import { VoucherDto } from '../validation/voucher.dto'
+import { VoucherTypeEntity } from '../entities/voucherType.entity'
+import { VoucherTypeDto } from '../validation/voucherType.dto'
 
-export class VoucherService extends BaseService<VoucherEntity> {
+export class VoucherTypeService extends BaseService<VoucherTypeEntity> {
   constructor () {
-    super(VoucherEntity)
+    super(VoucherTypeEntity)
   }
 
-  async findAllVoucher (): Promise<VoucherEntity[]> {
+  async findAllVoucher (): Promise<VoucherTypeEntity[]> {
     const repository = await this.execRepository
     return await repository.find()
   }
 
-  async findVoucherById (id: string): Promise<VoucherEntity | null> {
+  async findVoucherById (id: string): Promise<VoucherTypeEntity | null> {
     const repository = await this.execRepository
     try {
       const data = await repository.findOne({ where: { id } })
@@ -26,7 +26,7 @@ export class VoucherService extends BaseService<VoucherEntity> {
     }
   }
 
-  async createVoucher (body: VoucherDto): Promise<VoucherEntity | any> {
+  async createVoucher (body: VoucherTypeDto): Promise<VoucherTypeEntity | any> {
     const repository = await this.execRepository
     try {
       const data = await repository.save(body)
@@ -50,7 +50,7 @@ export class VoucherService extends BaseService<VoucherEntity> {
     }
   }
 
-  async updateVoucher (id: string, infoUpdate: VoucherEntity): Promise<UpdateResult | null> {
+  async updateVoucher (id: string, infoUpdate: VoucherTypeEntity): Promise<UpdateResult | null> {
     const repository = await this.execRepository
     try {
       const data = await repository.update(id, infoUpdate)

@@ -13,7 +13,7 @@ export class GuestEntity extends BaseEntity {
   @Column()
     name!: string
 
-  @Column({ unique: true })
+  @Column()
     lastname!: string
 
   @Column()

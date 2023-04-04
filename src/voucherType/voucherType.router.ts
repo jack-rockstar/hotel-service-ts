@@ -1,10 +1,10 @@
 import { BaseRoutes } from '../shared/routes/routes'
-import { VoucherController } from './controllers/voucher.controllers'
-import { VoucherMiddleware } from './middleware/voucher.middleware'
+import { VoucherTypeController } from './controllers/voucherType.controllers'
+import { VoucherTypeMiddleware } from './middleware/voucherType.middleware'
 
-export class VoucherRoutes extends BaseRoutes<VoucherController, VoucherMiddleware> {
+export class VoucherRoutes extends BaseRoutes<VoucherTypeController, VoucherTypeMiddleware> {
   constructor () {
-    super(VoucherController, VoucherMiddleware)
+    super(VoucherTypeController, VoucherTypeMiddleware)
   }
 
   routes (): any {
@@ -16,7 +16,7 @@ export class VoucherRoutes extends BaseRoutes<VoucherController, VoucherMiddlewa
       this.controller.getVoucherById(req, res)
         .catch((err: string) => console.log(`error VoucherId: ${err}`))
     })
-    this.router.post('/createvoucher', (req, res, next) => [this.middleware.voucherValidator(req, res, next)], (req, res) => {
+    this.router.post('/createvoucher', (req, res, next) => [this.middleware.voucherTypeValidator(req, res, next)], (req, res) => {
       this.controller.createVoucher(req, res)
         .catch((err: string) => console.log(`error createVoucher: ${err}`))
     })

@@ -1,7 +1,7 @@
 import { Column, Entity, JoinColumn, ManyToOne, OneToOne } from 'typeorm'
 import { BaseEntity } from '../../config/base.entity'
 import { RentalEntity } from '../../rental/entities/rental.entity'
-import { VoucherEntity } from '../../voucher/entities/voucher.entity'
+import { VoucherTypeEntity } from '../../voucherType/entities/voucherType.entity'
 
 @Entity({ name: 'BILLING' })
 export class BillingEntity extends BaseEntity {
@@ -12,9 +12,9 @@ export class BillingEntity extends BaseEntity {
   @Column({ name: 'voucher_id', nullable: false })
     voucherId!: string
 
-  @ManyToOne(() => VoucherEntity, (voucher) => voucher.billings, { eager: true })
+  @ManyToOne(() => VoucherTypeEntity, (voucher) => voucher.billings, { eager: true })
   @JoinColumn({ name: 'voucher_id' })
-    voucher!: VoucherEntity
+    voucher!: VoucherTypeEntity
 
   @Column()
     broadcastDate!: Date

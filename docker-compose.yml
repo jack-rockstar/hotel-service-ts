@@ -13,8 +13,8 @@ services:
       - POSTGRES_USER=admin
       - POSTGRES_PASSWORD=hotel
       - POSTGRES_DB=hotel_db
-    volumes:
-      - postgres-data:/var/lib/postgresql/data
+    # volumes:
+    #   - postgres-data:/var/lib/postgresql/data
   pgadmin:
     image: dpage/pgadmin4
     container_name: hotel-pgadmin

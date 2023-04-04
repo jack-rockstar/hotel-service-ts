@@ -10,7 +10,7 @@ import { DataSource } from 'typeorm'
 import { RentalRoutes } from './rental/rental.router'
 import { GuestRoutes } from './guest/guest.router'
 import { BillingRoutes } from './billing/billing.router'
-import { VoucherRoutes } from './voucher/voucher.router'
+import { VoucherRoutes } from './voucherType/voucherType.router'
 import { LoginStrategy } from './auth/strategies/login.strategy'
 import { JwtStrategy } from './auth/strategies/jwt.strategy'
 
