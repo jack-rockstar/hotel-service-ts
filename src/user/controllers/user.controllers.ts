@@ -45,6 +45,9 @@ export class UserController {
       const data = await this.userService.createUser(req.body)
 
       if (data.driverError?.name === 'error') {
+        if (data.driverError?.code === '23505') {
+          return this.httpReponse.Conflict(res, data.driverError)
+        }
         return this.httpReponse.NotFound(res, data.driverError)
       }
       return this.httpReponse.Ok(res, data)

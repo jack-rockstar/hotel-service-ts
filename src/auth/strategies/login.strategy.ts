@@ -6,20 +6,31 @@ import { Strategy as LocalStrategy, VerifyFunction } from 'passport-local'
 const authService: AuthService = new AuthService()
 
 export class LoginStrategy {
-  public async validate (user: string, password: string, done: any): Promise<UserEntity> {
-    const userDate = await authService.validateUser(user, password)
+  async validate (
+    username: string,
+    password: string,
+    done: any
+  ): Promise<UserEntity> {
+    const userData = await authService.validateUser(username, password)
 
-    if (userDate !== true) {
+    if (userData === false) {
       return done(null, false, { message: 'Invalid user or password' })
     }
 
-    return done(null, userDate)
+    return done(null, userData)
+  }
+
+  readonly passportParams = {
+    userNameField: 'username',
+    passwordField: 'password'
   }
 
   get use (): any {
-    return PassportUse<LocalStrategy, Object, VerifyFunction>('login', LocalStrategy, {
-      userField: 'user',
-      passwordField: 'password'
-    }, this.validate)
+    return PassportUse<LocalStrategy, Object, VerifyFunction>(
+      'login',
+      LocalStrategy,
+      this.passportParams,
+      this.validate
+    )
   }
 }

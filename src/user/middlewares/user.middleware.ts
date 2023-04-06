@@ -2,8 +2,9 @@ import { validate } from 'class-validator'
 import { NextFunction, Request, Response } from 'express'
 import { HttpResponse } from '../../shared/response/http.response'
 import { UserDto } from '../validation/user.dto'
+import { AuthMiddleware } from '../../shared/middlewares/auth.middleware'
 
-export class UserMiddleware {
+export class UserMiddleware extends AuthMiddleware {
   private readonly httpReponse: HttpResponse = new HttpResponse()
 
   userValidator (req: Request, res: Response, next: NextFunction): void {

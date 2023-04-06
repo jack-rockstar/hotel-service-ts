@@ -35,7 +35,7 @@ export class UserRoutes extends BaseRoutes<UserController, UserMiddleware> {
           this.httpResponse.Error(res, err)
         })
     })
-    this.router.delete('/deleteuser/:id', (req, res) => {
+    this.router.delete('/deleteuser/:id', (req, res, next) => [this.middleware.checkAdminRole(req, res, next)], (req, res) => {
       this.controller.deleteUser(req, res)
         .catch((err: any) => {
           this.httpResponse.Error(res, err)

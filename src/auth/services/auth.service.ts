@@ -11,30 +11,29 @@ export class AuthService extends ConfigServer {
     super()
   }
 
-  public async validateUser (user: string, password: string): Promise<UserEntity | boolean> {
+  public async validateUser (user: string, password: string): Promise<UserEntity | Boolean> {
     const userByEmail = await this.userService.findUserByEmail(user)
     const userByName = await this.userService.findUserByUser(user)
-
-    if (userByEmail != null) {
-      const isMatch = await bcrypt.compare(password, userByEmail.password)
-      return isMatch && userByEmail
-    }
 
     if (userByName != null) {
       const isMatch = await bcrypt.compare(password, userByName.password)
       return isMatch && userByName
     }
 
+    if (userByEmail != null) {
+      const isMatch = await bcrypt.compare(password, userByEmail.password)
+      return isMatch && userByEmail
+    }
+
     return false
   }
 
-  public sign (payload: jwt.JwtPayload, secret: any): any {
-    return this.jwtInstance.sign(payload, secret)
+  sign (payload: jwt.JwtPayload, secret: any): any {
+    return this.jwtInstance.sign(payload, secret, { expiresIn: '1h' })
   }
 
-  public async generateJWT (user: UserEntity): Promise<any> {
+  public async generateJWT (user: UserEntity): Promise<{ accessToken: string, user: UserEntity }> {
     const userConsult = await this.userService.findUserWithRole(user.id, user.role)
-
     const payload: PayloadToken = {
       role: userConsult?.role,
       sub: userConsult?.id

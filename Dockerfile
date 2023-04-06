@@ -12,7 +12,7 @@ RUN npm install
 
 # ENV NODE_ENV=PRODUCTION
 
-# RUN npm run m:gen --src/migrations/InitDB
+# RUN npm run m:gen -- src/migrations/InitDB
 
 # RUN npm run m:run 
 

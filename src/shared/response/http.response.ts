@@ -6,6 +6,7 @@ export enum HttpStatus {
   UNAUTHORIZED = 401,
   BAD_REQUEST = 400,
   FORBIDDEN = 403,
+  CONFLICT = 409,
   INTERNAL_SERVER_ERROR = 500
 }
 
@@ -54,6 +55,14 @@ export class HttpResponse {
     return res.status(HttpStatus.BAD_REQUEST).json({
       status: HttpStatus.BAD_REQUEST,
       statusMsg: 'Incomplete data',
+      error: data
+    })
+  }
+
+  Conflict (res: Response, data?: any): Response {
+    return res.status(HttpStatus.CONFLICT).json({
+      status: HttpStatus.CONFLICT,
+      statusMsg: 'Duplicate user',
       error: data
     })
   }
