@@ -50,7 +50,6 @@ export class Server extends ConfigServer {
 
   unProtectedRoutes (): express.Router[] {
     return [new AuthRoutes().router
-
     ]
   }
 
