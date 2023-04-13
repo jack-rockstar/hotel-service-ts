@@ -26,7 +26,7 @@ export class Server extends ConfigServer {
     this.app.use(express.json())
     this.app.use(morgan('dev'))
     this.app.use(cors())
-    this.app.use('/api/', this.unProtectedRoutes())
+    this.app.use('/', this.unProtectedRoutes())
     this.app.use(this.middlewareAuth.passAuth('jwt'))
     this.passportUser()
     this.dbConnect()
