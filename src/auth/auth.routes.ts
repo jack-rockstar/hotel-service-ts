@@ -11,10 +11,13 @@ export class AuthRoutes extends BaseRoutes<AuthController, AuthMiddleware> {
   private readonly httpResponse: HttpResponse = new HttpResponse()
 
   public routes (): void {
+    this.router.get('/', (_req, res) => {
+      res.status(200).json({ status: 200, message: 'Service Currently' })
+    })
+
     this.router.post('/login', this.middleware.passAuth('login'), (req, res) => {
       this.controller.login(req, res)
         .catch((err: any) => {
-          console.log('AAA')
           this.httpResponse.Error(res, err)
         })
     })
