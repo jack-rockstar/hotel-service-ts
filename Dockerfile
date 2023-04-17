@@ -10,6 +10,7 @@ COPY . .
 
 RUN npm install
 
+ENV NODE_ENV = production
 
 RUN npm run m:gen -- src/migrations/InitDB
 
