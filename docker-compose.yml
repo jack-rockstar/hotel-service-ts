@@ -13,18 +13,18 @@ services:
       - POSTGRES_USER=admin
       - POSTGRES_PASSWORD=hotel
       - POSTGRES_DB=hotel_db
-    volumes:
-      - postgres-data:/var/lib/postgresql/data
-  # pgadmin:
-  #   image: dpage/pgadmin4
-  #   container_name: hotel-pgadmin
-  #   environment:
-  #     PGADMIN_DEFAULT_EMAIL: "jacknajarro1@gmail.com"
-  #     PGADMIN_DEFAULT_PASSWORD: "admin"
-  #   ports:
-  #     - "5050:80"
-  #   depends_on:
-  #     - hotel_db
+      # volumes:
+      # - postgres-data:/var/lib/postgresql/data
+      # pgadmin:
+      #   image: dpage/pgadmin4
+      #   container_name: hotel-pgadmin
+      #   environment:
+      #     PGADMIN_DEFAULT_EMAIL: "jacknajarro1@gmail.com"
+      #     PGADMIN_DEFAULT_PASSWORD: "admin"
+      #   ports:
+      #     - "5050:80"
+      #   depends_on:
+      #     - hotel_db
 
 volumes:
   postgres-data:
