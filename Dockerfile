@@ -24,4 +24,4 @@ RUN npm run m:run
 
 EXPOSE 8080
 
-CMD ["npm", "start"]
+CMD ["npm", "start:prod"]
