@@ -11,6 +11,13 @@ COPY . .
 RUN npm install
 
 ENV NODE_ENV=production
+ENV PORT=8080
+ENV DB_PORT=7706
+ENV DB_HOST=containers-us-west-49.railway.app
+ENV DB_USER=postgres
+ENV DB_PASSWORD=b1ibutb3hlW7z29BO7Ca
+ENV DB_POSTGRES_DB=railway
+ENV JWT_SECRET=hotel-secret
 
 RUN npm run m:gen -- src/migrations/InitDB
 
