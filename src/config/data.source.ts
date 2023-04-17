@@ -6,7 +6,7 @@ import * as dotenv from 'dotenv'
 dotenv.config({
   path: process.env.NODE_ENV !== undefined ? `.${process.env.NODE_ENV.trim()}.env` : '.env'
 })
-
+console.log(process.env.NODE_ENV)
 const Config: DataSourceOptions = {
   type: 'postgres',
   host: process.env.DB_HOST,
