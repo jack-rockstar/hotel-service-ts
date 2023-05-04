@@ -14,10 +14,10 @@ import { VoucherRoutes } from './voucherType/voucherType.router'
 import { LoginStrategy } from './auth/strategies/login.strategy'
 import { JwtStrategy } from './auth/strategies/jwt.strategy'
 import { AuthRoutes } from './auth/auth.routes'
-// import { AuthMiddleware } from './shared/middlewares/auth.middleware'
+import { AuthMiddleware } from './shared/middlewares/auth.middleware'
 
 export class Server extends ConfigServer {
-  // private readonly middlewareAuth: AuthMiddleware = new AuthMiddleware()
+  private readonly middlewareAuth: AuthMiddleware = new AuthMiddleware()
   public app: express.Application = express()
   private readonly port: Number = this.getNumberEnv('PORT') ?? 8080
 
@@ -27,7 +27,7 @@ export class Server extends ConfigServer {
     this.app.use(morgan('dev'))
     this.app.use(cors())
     this.app.use('/', this.unProtectedRoutes())
-    // this.app.use(this.middlewareAuth.passAuth('jwt'))
+    this.app.use(this.middlewareAuth.passAuth('jwt'))
     this.passportUser()
     this.dbConnect()
       .then(() => console.log('Connection true'))
