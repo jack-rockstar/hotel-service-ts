@@ -13,6 +13,7 @@ export class AuthController extends AuthService {
   async login (req: Request, res: Response): Promise<any> {
     try {
       console.log('==== LOGIN ====')
+      console.log(req.hostname)
       const userEncode = req.user as UserEntity
       const encode = await this.generateJWT(userEncode)
       if (encode === undefined || encode === null) {
