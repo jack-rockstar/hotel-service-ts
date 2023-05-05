@@ -21,9 +21,7 @@ export class AuthController extends AuthService {
       }
       res.header('Content-Type', 'application/json')
       res.cookie('accessToken', encode.accessToken, {
-        maxAge: 60000 * 60,
-        domain: req.hostname,
-        path: '/'
+        maxAge: 60000 * 60
       })
       res.write(JSON.stringify(encode))
       res.end()
