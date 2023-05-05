@@ -10,8 +10,8 @@ export class RoomTypeEntity extends BaseEntity {
   @Column()
     description!: string
 
-  @Column()
-    features!: string
+  @Column({ type: 'simple-array' })
+    features!: string[]
 
   @OneToMany(() => RoomEntity, (RoomEntity) => RoomEntity.roomType, { eager: true })
     bedRooms!: RoomEntity[]
