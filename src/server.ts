@@ -25,7 +25,7 @@ export class Server extends ConfigServer {
     super()
     this.app.use(express.json())
     this.app.use(morgan('dev'))
-    this.app.use(cors())
+    this.app.use(cors({ origin: '*', optionsSuccessStatus: 200 }))
     this.app.use('/', this.unProtectedRoutes())
     this.app.use(this.middlewareAuth.passAuth('jwt'))
     this.passportUser()
