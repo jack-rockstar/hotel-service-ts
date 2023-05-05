@@ -19,7 +19,11 @@ export class AuthController extends AuthService {
         return this.httpResponse.Unauthorized(res, 'No tienes permisos asignados')
       }
       res.header('Content-Type', 'application/json')
-      res.cookie('accessToken', encode.accessToken, { maxAge: 60000 * 60 })
+      res.cookie('accessToken', encode.accessToken, {
+        maxAge: 60000 * 60,
+        domain: 'localhost',
+        path: '/'
+      })
       res.write(JSON.stringify(encode))
       res.end()
     } catch (error) {

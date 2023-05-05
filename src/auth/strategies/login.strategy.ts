@@ -12,7 +12,6 @@ export class LoginStrategy {
     done: any
   ): Promise<UserEntity> {
     const userData = await authService.validateUser(username, password)
-
     if (userData === false) {
       return done(null, false, { message: 'Invalid user or password' })
     }
@@ -21,7 +20,7 @@ export class LoginStrategy {
   }
 
   readonly passportParams = {
-    userNameField: 'username',
+    usernameField: 'username',
     passwordField: 'password'
   }
 

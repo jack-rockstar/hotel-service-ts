@@ -1,6 +1,6 @@
 import passport from 'passport'
 import { HttpResponse } from '../response/http.response'
-import { NextFunction, Request, Response } from 'express'
+import { NextFunction, Response, Request } from 'express'
 import { UserEntity } from '../../user/entities/user.entity'
 import { RoleType } from '../../user/validation/user.dto'
 
@@ -9,7 +9,13 @@ export class AuthMiddleware {
   }
 
   passAuth (type: string): any {
-    return passport.authenticate(type, { session: false })
+    return (req: Request, res: Response, next: NextFunction) => {
+      passport.authenticate(type, { session: false }, (err: any, user: any): any => {
+        if (err !== null || user === false) return this.httpResponse.Unauthorized(res, 'Invalid user or password')
+        req.user = user
+        next()
+      })(req, res, next)
+    }
   }
 
   checkAdminRole (req: Request, res: Response, next: NextFunction): any {
