@@ -8,5 +8,5 @@ export class RoomTypeDto extends BaseDto {
     description!: string
 
   @IsNotEmpty()
-    features!: string
+    features!: string[]
 }
