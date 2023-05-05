@@ -2,6 +2,7 @@ import 'reflect-metadata'
 import express from 'express'
 import morgan from 'morgan'
 import cors from 'cors'
+import cookieParser from 'cookie-parser'
 import { UserRoutes } from './user/user.router'
 import { ConfigServer } from './config/config'
 import { RoomRoutes } from './room/room.router'
@@ -23,6 +24,7 @@ export class Server extends ConfigServer {
 
   constructor () {
     super()
+    this.app.use(cookieParser())
     this.app.use(express.json())
     this.app.use(morgan('dev'))
     this.app.use(cors({ origin: '*', optionsSuccessStatus: 200 }))

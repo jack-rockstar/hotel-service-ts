@@ -11,7 +11,7 @@ export class AuthMiddleware {
   passAuth (type: string): any {
     return (req: Request, res: Response, next: NextFunction) => {
       passport.authenticate(type, { session: false }, (err: any, user: any): any => {
-        if (err !== null || user === false) return this.httpResponse.Unauthorized(res, 'Invalid user or password')
+        if (err !== null || user === false) return this.httpResponse.Unauthorized(res, 'No se esta enviando el token de verificacion')
         req.user = user
         next()
       })(req, res, next)
