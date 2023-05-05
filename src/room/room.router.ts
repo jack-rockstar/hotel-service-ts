@@ -8,14 +8,20 @@ export class RoomRoutes extends BaseRoutes<RoomController, RoomMiddleware> {
   }
 
   routes (): any {
-    this.router.get('/rooms', (req, res) => {
-      this.controller.getRooms(req, res)
-        .catch((err: string) => console.log(`error getRoom: ${err}`))
+    this.router.get('/room', (req, res) => {
+      const { id } = req.query
+      if (id === undefined) {
+        this.controller.getRooms(req, res)
+          .catch((err: string) => console.log(`error getRoom: ${err}`))
+      } else {
+        this.controller.getRoomById(req, res)
+          .catch((err: string) => console.log(`error RoomId: ${err}`))
+      }
     })
-    this.router.get('/room/:id', (req, res) => {
-      this.controller.getRoomById(req, res)
-        .catch((err: string) => console.log(`error RoomId: ${err}`))
-    })
+    // this.router.get('/room/:id', (req, res) => {
+    //   this.controller.getRoomById(req, res)
+    //     .catch((err: string) => console.log(`error RoomId: ${err}`))
+    // })
     this.router.post('/createroom', (req, res, next) => [this.middleware.roomValidator(req, res, next)], (req, res) => {
       this.controller.createRoom(req, res)
         .catch((err: string) => console.log(`error createRoom: ${err}`))
