@@ -10,7 +10,11 @@ export class RoomService extends BaseService<RoomEntity> {
 
   async findAllRoom (): Promise<RoomEntity[]> {
     const repository = await this.execRepository
-    return await repository.find()
+    return await repository
+      .createQueryBuilder('room')
+      .innerJoinAndSelect('room.roomType', 'roomType')
+      .getMany()
+    // return await repository.find()
   }
 
   async findRoomById (id: string): Promise<RoomEntity | null> {
