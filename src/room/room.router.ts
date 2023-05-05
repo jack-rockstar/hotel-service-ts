@@ -10,7 +10,7 @@ export class RoomRoutes extends BaseRoutes<RoomController, RoomMiddleware> {
   routes (): any {
     this.router.get('/room', (req, res) => {
       const { id } = req.query
-      if (id === undefined) {
+      if (id === undefined || id === '') {
         this.controller.getRooms(req, res)
           .catch((err: string) => console.log(`error getRoom: ${err}`))
       } else {
