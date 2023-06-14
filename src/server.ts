@@ -51,8 +51,7 @@ export class Server extends ConfigServer {
   }
 
   unProtectedRoutes (): express.Router[] {
-    return [new AuthRoutes().router
-    ]
+    return [new AuthRoutes().router]
   }
 
   passportUser (): any[] {
