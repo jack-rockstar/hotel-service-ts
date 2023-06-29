@@ -15,7 +15,7 @@ export class GuestDto extends BaseDto {
     lastname!: string
 
   @IsNotEmpty()
-    age!: string
+    birthDate!: Date
 
   nationality?: string
 

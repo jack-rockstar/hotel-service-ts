@@ -12,7 +12,7 @@ export class GuestMiddleware {
       numberDoc,
       name,
       lastname,
-      age,
+      birthDate,
       direction,
       phone,
       email
@@ -24,7 +24,7 @@ export class GuestMiddleware {
     valid.numberDoc = numberDoc
     valid.name = name
     valid.lastname = lastname
-    valid.age = age
+    valid.birthDate = birthDate
     valid.direction = direction
     valid.phone = phone
     valid.email = email

@@ -17,7 +17,7 @@ export class GuestEntity extends BaseEntity {
     lastname!: string
 
   @Column()
-    age!: string
+    birthDate!: Date
 
   @Column({ nullable: true })
     nationality?: string
