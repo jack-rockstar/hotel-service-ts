@@ -14,10 +14,14 @@ export class UserDto extends BaseDto {
 
   @IsNotEmpty()
   @IsLowercase()
-    lastname!: string
+    patLastname!: string
 
   @IsNotEmpty()
-    age!: string
+  @IsLowercase()
+    matLastname!: string
+
+  @IsNotEmpty()
+    birthdate!: Date
 
   direction?: string
 

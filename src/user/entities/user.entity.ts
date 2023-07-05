@@ -3,6 +3,7 @@ import { Column, Entity, OneToMany } from 'typeorm'
 import { BaseEntity } from '../../config/base.entity'
 import { RentalEntity } from '../../rental/entities/rental.entity'
 import { RoleType } from '../validation/user.dto'
+import { IsDateString } from 'class-validator'
 
 @Entity({ name: 'USER' })
 export class UserEntity extends BaseEntity {
@@ -16,10 +17,14 @@ export class UserEntity extends BaseEntity {
     name!: string
 
   @Column()
-    lastname!: string
+    patLastname!: string
 
   @Column()
-    age!: string
+    matLastname!: string
+
+  @Column()
+  @IsDateString({ strict: true })
+    birthdate!: Date
 
   @Column({ nullable: true })
     direction?: string

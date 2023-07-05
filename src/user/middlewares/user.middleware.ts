@@ -12,8 +12,9 @@ export class UserMiddleware extends AuthMiddleware {
       typeDoc,
       numberDoc,
       name,
-      lastname,
-      age,
+      patLastname,
+      matLastname,
+      birthdate,
       direction,
       phone,
       email,
@@ -26,8 +27,9 @@ export class UserMiddleware extends AuthMiddleware {
     valid.typeDoc = typeDoc ?? null
     valid.numberDoc = numberDoc
     valid.name = name
-    valid.lastname = lastname
-    valid.age = age
+    valid.patLastname = patLastname
+    valid.matLastname = matLastname
+    valid.birthdate = birthdate
     valid.direction = direction
     valid.phone = phone
     valid.email = email

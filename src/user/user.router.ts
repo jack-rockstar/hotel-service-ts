@@ -23,7 +23,7 @@ export class UserRoutes extends BaseRoutes<UserController, UserMiddleware> {
           this.httpResponse.Error(res, err)
         })
     })
-    this.router.post('/createuser', (req, res, next) => [this.middleware.userValidator(req, res, next)], (req, res) => {
+    this.router.post('/user', (req, res, next) => [this.middleware.userValidator(req, res, next)], (req, res) => {
       this.controller.createUser(req, res)
         .catch((err: any) => {
           this.httpResponse.Error(res, err)
