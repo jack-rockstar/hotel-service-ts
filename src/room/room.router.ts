@@ -3,11 +3,11 @@ import { RoomController } from './controllers/room.controllers'
 import { RoomMiddleware } from './middleware/room.middleware'
 
 export class RoomRoutes extends BaseRoutes<RoomController, RoomMiddleware> {
-  constructor () {
+  constructor() {
     super(RoomController, RoomMiddleware)
   }
 
-  routes (): any {
+  routes(): any {
     this.router.get('/room', (req, res) => {
       const { id } = req.query
       if (id === undefined || id === '') {
@@ -22,7 +22,7 @@ export class RoomRoutes extends BaseRoutes<RoomController, RoomMiddleware> {
     //   this.controller.getRoomById(req, res)
     //     .catch((err: string) => console.log(`error RoomId: ${err}`))
     // })
-    this.router.post('/createroom', (req, res, next) => [this.middleware.roomValidator(req, res, next)], (req, res) => {
+    this.router.post('/room', (req, res, next) => [this.middleware.roomValidator(req, res, next)], (req, res) => {
       this.controller.createRoom(req, res)
         .catch((err: string) => console.log(`error createRoom: ${err}`))
     })

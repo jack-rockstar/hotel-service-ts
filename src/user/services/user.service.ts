@@ -5,16 +5,16 @@ import { RoleType, UserDto } from '../validation/user.dto'
 import * as bcrypt from 'bcrypt'
 
 export class UserService extends BaseService<UserEntity> {
-  constructor () {
+  constructor() {
     super(UserEntity)
   }
 
-  async findAllUser (): Promise<UserEntity[]> {
+  async findAllUser(): Promise<UserEntity[]> {
     const repository = await this.execRepository
     return await repository.find()
   }
 
-  async findUserById (id: string): Promise<UserEntity | null> {
+  async findUserById(id: string): Promise<UserEntity | null> {
     const repository = await this.execRepository
 
     try {
@@ -28,7 +28,7 @@ export class UserService extends BaseService<UserEntity> {
     }
   }
 
-  async findUserByEmail (email: string): Promise<UserEntity | null> {
+  async findUserByEmail(email: string): Promise<UserEntity | null> {
     const repository = await this.execRepository
 
     try {
@@ -42,7 +42,7 @@ export class UserService extends BaseService<UserEntity> {
     }
   }
 
-  async findUserByUser (user: string): Promise<UserEntity | null> {
+  async findUserByUser(user: string): Promise<UserEntity | null> {
     const repository = await this.execRepository
 
     try {
@@ -56,7 +56,7 @@ export class UserService extends BaseService<UserEntity> {
     }
   }
 
-  async findUserWithRole (id: string, role: RoleType): Promise<UserEntity | null> {
+  async findUserWithRole(id: string, role: RoleType): Promise<UserEntity | null> {
     const repository = await this.execRepository
     return await repository
       .createQueryBuilder('user')
@@ -65,7 +65,7 @@ export class UserService extends BaseService<UserEntity> {
       .getOne()
   }
 
-  async createUser (body: UserDto): Promise<UserEntity | any> {
+  async createUser(body: UserDto): Promise<UserEntity | any> {
     const repository = await this.execRepository
     try {
       const newUser = repository.create(body)
@@ -74,12 +74,12 @@ export class UserService extends BaseService<UserEntity> {
       const data = await repository.save(newUser)
       return data
     } catch (error) {
-      // console.log(error)
+      console.log(error)
       return error
     }
   }
 
-  async deleteUser (id: string): Promise<DeleteResult | null> {
+  async deleteUser(id: string): Promise<DeleteResult | null> {
     const repository = await this.execRepository
     try {
       const data: DeleteResult = await repository.delete({ id })
@@ -92,7 +92,7 @@ export class UserService extends BaseService<UserEntity> {
     }
   }
 
-  async updateUser (id: string, infoUpdate: UserEntity): Promise<UpdateResult | null> {
+  async updateUser(id: string, infoUpdate: UserEntity): Promise<UpdateResult | null> {
     const repository = await this.execRepository
     try {
       const data = await repository.update(id, infoUpdate)

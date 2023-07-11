@@ -22,7 +22,7 @@ export class Server extends ConfigServer {
   public app: express.Application = express()
   private readonly port: Number = this.getNumberEnv('PORT') ?? 8080
 
-  constructor () {
+  constructor() {
     super()
     this.app.use(cookieParser())
     this.app.use(express.json())
@@ -39,30 +39,30 @@ export class Server extends ConfigServer {
     // this.listen()
   }
 
-  protectedRoutes (): express.Router[] {
+  protectedRoutes(): express.Router[] {
     return [new UserRoutes().router,
-      new RoomRoutes().router,
-      new RoomTypeRoutes().router,
-      new RentalRoutes().router,
-      new GuestRoutes().router,
-      new BillingRoutes().router,
-      new VoucherRoutes().router
+    new RoomRoutes().router,
+    new RoomTypeRoutes().router,
+    new RentalRoutes().router,
+    new GuestRoutes().router,
+    new BillingRoutes().router,
+    new VoucherRoutes().router
     ]
   }
 
-  unProtectedRoutes (): express.Router[] {
+  unProtectedRoutes(): express.Router[] {
     return [new AuthRoutes().router]
   }
 
-  passportUser (): any[] {
+  passportUser(): any[] {
     return [new LoginStrategy().use, new JwtStrategy().use]
   }
 
-  async dbConnect (): Promise<DataSource | any> {
+  async dbConnect(): Promise<DataSource | any> {
     return await this.initConnect
   }
 
-  public listen (): void {
+  public listen(): void {
     this.app.listen(this.port, () => {
       console.log(`server is running: ${String(this.port)}`)
     })

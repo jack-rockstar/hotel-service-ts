@@ -7,7 +7,6 @@ dotenv.config({
   path: process.env.NODE_ENV !== undefined ? `.${process.env.NODE_ENV.trim()}.env` : '.env'
 })
 console.log(process.env.NODE_ENV)
-console.log(`${path.join(__dirname, '../../src')}`)
 const Config: DataSourceOptions = {
   type: 'postgres',
   host: process.env.DB_HOST,
