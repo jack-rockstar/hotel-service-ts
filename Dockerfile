@@ -12,10 +12,10 @@ RUN npm install
 
 ENV NODE_ENV=production
 ENV PORT=8080
-ENV DB_PORT=7268
-ENV DB_HOST=containers-us-west-137.railway.app
+ENV DB_PORT=7830
+ENV DB_HOST=containers-us-west-5.railway.app
 ENV DB_USER=postgres
-ENV DB_PASSWORD=HsC2PIyqgfrTwQC0awKZ
+ENV DB_PASSWORD=GaxrTU6TJGyaWLDU4A8D
 ENV DB_POSTGRES_DB=railway
 ENV JWT_SECRET=hotel-secret
 
