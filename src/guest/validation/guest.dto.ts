@@ -3,19 +3,22 @@ import { IsNotEmpty } from 'class-validator'
 
 export class GuestDto extends BaseDto {
   @IsNotEmpty()
-    typeDoc!: string
+  typeDoc!: string
 
   @IsNotEmpty()
-    numberDoc!: string
+  numberDoc!: string
 
   @IsNotEmpty()
-    name!: string
+  name!: string
 
   @IsNotEmpty()
-    lastname!: string
+  patLastname!: string
 
   @IsNotEmpty()
-    birthDate!: Date
+  matLastname!: string
+
+  @IsNotEmpty()
+  birthDate!: Date
 
   nationality?: string
 

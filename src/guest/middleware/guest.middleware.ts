@@ -6,12 +6,13 @@ import { GuestDto } from '../validation/guest.dto'
 export class GuestMiddleware {
   private readonly httpReponse: HttpResponse = new HttpResponse()
 
-  guestValidator (req: Request, res: Response, next: NextFunction): void {
+  guestValidator(req: Request, res: Response, next: NextFunction): void {
     const {
       typeDoc,
       numberDoc,
       name,
-      lastname,
+      patLastname,
+      matLastname,
       birthDate,
       direction,
       phone,
@@ -23,7 +24,8 @@ export class GuestMiddleware {
     valid.typeDoc = typeDoc
     valid.numberDoc = numberDoc
     valid.name = name
-    valid.lastname = lastname
+    valid.patLastname = patLastname
+    valid.matLastname = matLastname
     valid.birthDate = birthDate
     valid.direction = direction
     valid.phone = phone

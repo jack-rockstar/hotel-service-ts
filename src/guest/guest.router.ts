@@ -3,20 +3,24 @@ import { GuestController } from './controllers/guest.controllers'
 import { GuestMiddleware } from './middleware/guest.middleware'
 
 export class GuestRoutes extends BaseRoutes<GuestController, GuestMiddleware> {
-  constructor () {
+  constructor() {
     super(GuestController, GuestMiddleware)
   }
 
-  routes (): any {
-    this.router.get('/guest', (req, res) => {
+  routes(): any {
+    this.router.get('/guests', (req, res) => {
       this.controller.getGuest(req, res)
         .catch((err: string) => console.log(`error getGuest: ${err}`))
+    })
+    this.router.get('/guest', (req, res) => {
+      this.controller.getHuespedByDoc(req, res)
+        .catch((err: string) => console.log(`Error en buscar el usuario por documento: ${err} `))
     })
     this.router.get('/guest/:id', (req, res) => {
       this.controller.getGuestById(req, res)
         .catch((err: string) => console.log(`error GuestId: ${err}`))
     })
-    this.router.post('/createguest', (req, res, next) => [this.middleware.guestValidator(req, res, next)], (req, res) => {
+    this.router.post('/guest', (req, res, next) => [this.middleware.guestValidator(req, res, next)], (req, res) => {
       this.controller.createGuest(req, res)
         .catch((err: string) => console.log(`error createGuest: ${err}`))
     })

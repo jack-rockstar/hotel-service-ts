@@ -1,0 +1,12 @@
+{
+  "extends": [
+    "./node_modules/ts-standard/eslintrc.json"
+  ],
+  "rules": {
+    "space-before-function-paren": "off",
+    "@typescript-eslint/indent": [
+      "error",
+      2
+    ]
+  }
+}

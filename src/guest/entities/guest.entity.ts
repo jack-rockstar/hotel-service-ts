@@ -5,32 +5,35 @@ import { RentalEntity } from '../../rental/entities/rental.entity'
 @Entity({ name: 'GUEST' })
 export class GuestEntity extends BaseEntity {
   @Column()
-    typeDoc!: string
+  typeDoc!: string
 
   @Column({ unique: true })
-    numberDoc!: string
+  numberDoc!: string
 
   @Column()
-    name!: string
+  name!: string
 
   @Column()
-    lastname!: string
+  patLastname!: string
 
   @Column()
-    birthDate!: Date
+  matLastname!: string
+
+  @Column()
+  birthDate!: Date
 
   @Column({ nullable: true })
-    nationality?: string
+  nationality?: string
 
   @Column({ nullable: true })
-    direction?: string
+  direction?: string
 
   @Column({ nullable: true })
-    phone?: string
+  phone?: string
 
   @Column({ nullable: true })
-    email?: string
+  email?: string
 
   @OneToMany(() => RentalEntity, (rental) => rental.guest, { eager: true })
-    rentals!: RentalEntity[]
+  rentals!: RentalEntity[]
 }

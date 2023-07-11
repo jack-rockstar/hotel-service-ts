@@ -7,7 +7,7 @@ export class GuestController {
   private readonly guestService: GuestService = new GuestService()
   private readonly httpReponse: HttpResponse = new HttpResponse()
 
-  async getGuest (_req: Request, res: Response): Promise<any> {
+  async getGuest(_req: Request, res: Response): Promise<any> {
     try {
       console.log('===INITIALIZING API GET GUEST===')
       const data = await this.guestService.findAllGuest()
@@ -22,7 +22,7 @@ export class GuestController {
     }
   }
 
-  async getGuestById (req: Request, res: Response): Promise<any> {
+  async getGuestById(req: Request, res: Response): Promise<any> {
     try {
       console.log('===INITIALIZING API GET GUEST BY ID===')
       const { id } = req.params
@@ -38,7 +38,23 @@ export class GuestController {
     }
   }
 
-  async createGuest (req: Request, res: Response): Promise<any> {
+  async getHuespedByDoc(req: Request, res: Response): Promise<any> {
+    try {
+      console.log('===INITIALIZING API GET GUEST BY DOCUMENT===')
+      const { typeDoc, numberDoc } = req.query
+      const data = await this.guestService.findHuespedByDoc(typeDoc, numberDoc)
+      if (data == null) {
+        return this.httpReponse.NotFound(res, 'No se encontro informacion con el tipo documento especificado')
+      }
+      return this.httpReponse.Ok(res, data)
+    } catch (error) {
+      return this.httpReponse.Error(res, error)
+    } finally {
+      console.log('===END API GET  GUEST BY DOCUMENT===')
+    }
+  }
+
+  async createGuest(req: Request, res: Response): Promise<any> {
     try {
       console.log('===INITIALIZING API CREATE GUEST===')
       const data = await this.guestService.createGuest(req.body)
@@ -54,7 +70,7 @@ export class GuestController {
     }
   }
 
-  async updateGuest (req: Request, res: Response): Promise<any> {
+  async updateGuest(req: Request, res: Response): Promise<any> {
     try {
       console.log('===INITIALIZING API GET UPDATE GUEST===')
       const { id } = req.params
@@ -70,7 +86,7 @@ export class GuestController {
     }
   }
 
-  async deleteGuest (req: Request, res: Response): Promise<any> {
+  async deleteGuest(req: Request, res: Response): Promise<any> {
     try {
       console.log('===INITIALIZING API GET DELETE GUEST===')
 
