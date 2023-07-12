@@ -3,11 +3,11 @@ import { RentalController } from './controllers/rental.controllers'
 import { RentalMiddleware } from './middleware/rental.middleware'
 
 export class RentalRoutes extends BaseRoutes<RentalController, RentalMiddleware> {
-  constructor () {
+  constructor() {
     super(RentalController, RentalMiddleware)
   }
 
-  routes (): any {
+  routes(): any {
     this.router.get('/rental', (req, res) => {
       this.controller.getRentals(req, res)
         .catch((err: string) => console.log(`error getRental: ${err}`))
@@ -16,7 +16,7 @@ export class RentalRoutes extends BaseRoutes<RentalController, RentalMiddleware>
       this.controller.getRentalById(req, res)
         .catch((err: string) => console.log(`error RentalId: ${err}`))
     })
-    this.router.post('/createrental', (req, res, next) => [this.middleware.rentalValidator(req, res, next)], (req, res) => {
+    this.router.post('/rental', (req, res, next) => [this.middleware.rentalValidator(req, res, next)], (req, res) => {
       this.controller.createRental(req, res)
         .catch((err: string) => console.log(`error createRental: ${err}`))
     })
