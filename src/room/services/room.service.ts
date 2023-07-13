@@ -4,20 +4,21 @@ import { RoomEntity } from '../entities/room.entity'
 import { RoomDto } from '../validation/room.dto'
 
 export class RoomService extends BaseService<RoomEntity> {
-  constructor () {
+  constructor() {
     super(RoomEntity)
   }
 
-  async findAllRoom (): Promise<RoomEntity[]> {
+  async findAllRoom(): Promise<RoomEntity[]> {
     const repository = await this.execRepository
     return await repository
       .createQueryBuilder('room')
       .innerJoinAndSelect('room.roomType', 'roomType')
+      .leftJoinAndSelect('roomType.roomFeatures', 'roomFeatures')
       .getMany()
     // return await repository.find()
   }
 
-  async findRoomById (id: string): Promise<RoomEntity | null> {
+  async findRoomById(id: string): Promise<RoomEntity | null> {
     const repository = await this.execRepository
     try {
       const data = await repository.findOne({ where: { id } })
@@ -30,7 +31,7 @@ export class RoomService extends BaseService<RoomEntity> {
     }
   }
 
-  async createRoom (body: RoomDto): Promise<RoomEntity | any> {
+  async createRoom(body: RoomDto): Promise<RoomEntity | any> {
     const repository = await this.execRepository
     try {
       const data = await repository.save(body)
@@ -41,7 +42,7 @@ export class RoomService extends BaseService<RoomEntity> {
     }
   }
 
-  async deleteRoom (id: string): Promise<DeleteResult | null> {
+  async deleteRoom(id: string): Promise<DeleteResult | null> {
     const repository = await this.execRepository
     try {
       const data: DeleteResult = await repository.delete({ id })
@@ -54,7 +55,7 @@ export class RoomService extends BaseService<RoomEntity> {
     }
   }
 
-  async updateRoom (id: string, infoUpdate: RoomEntity): Promise<UpdateResult | null> {
+  async updateRoom(id: string, infoUpdate: RoomEntity): Promise<UpdateResult | null> {
     const repository = await this.execRepository
     try {
       const data = await repository.update(id, infoUpdate)
