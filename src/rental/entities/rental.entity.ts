@@ -8,36 +8,42 @@ import { UserEntity } from '../../user/entities/user.entity'
 @Entity({ name: 'RENTAL' })
 export class RentalEntity extends BaseEntity {
   @Column()
-    status!: string
+  status!: string
 
   @Column({ name: 'room_id', nullable: false })
-    roomId!: string
+  roomId!: string
 
   @Column({ name: 'guest_id', nullable: false })
-    guestId!: string
+  guestId!: string
 
   @Column({ name: 'user_id', nullable: false })
-    userId!: string
+  userId!: string
 
   @ManyToOne(() => RoomEntity, (room) => room.rentals)
   @JoinColumn({ name: 'room_id' })
-    room!: RoomEntity
+  room!: RoomEntity
 
   @ManyToOne(() => GuestEntity, (guest) => guest.rentals)
   @JoinColumn({ name: 'guest_id' })
-    guest!: GuestEntity
+  guest!: GuestEntity
 
   @ManyToOne(() => UserEntity, (user) => user.rentals)
   @JoinColumn({ name: 'user_id' })
-    user!: UserEntity
+  user!: UserEntity
 
   @Column()
-    admissionDate!: Date
+  admissionDate!: Date
 
   @Column()
-    departureDate!: Date
+  departureDate!: Date
+
+  @Column()
+  paymentInAdvance!: String
+
+  @Column()
+  fullPayment!: String
 
   @OneToOne(() => BillingEntity, (billing) => billing.rental, { nullable: true })
-  @JoinColumn({ name: 'billing_id' })
-    billing!: BillingEntity
+  // @JoinColumn({ name: 'billing_id' })
+  billing!: BillingEntity
 }

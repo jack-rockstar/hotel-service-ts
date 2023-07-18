@@ -6,12 +6,12 @@ import { BillingDto } from '../validation/billing.dto'
 export class BillingMiddleware {
   private readonly httpReponse: HttpResponse = new HttpResponse()
 
-  billingValidator (req: Request, res: Response, next: NextFunction): void {
+  billingValidator(req: Request, res: Response, next: NextFunction): void {
     const {
       rental,
       voucherId,
       broadcastDate,
-      payday,
+      payDay,
       fullPayment
 
     } = req.body
@@ -21,7 +21,7 @@ export class BillingMiddleware {
     valid.rental = rental
     valid.voucherId = voucherId
     valid.broadcastDate = broadcastDate
-    valid.payDay = payday
+    valid.payDay = payDay
     valid.fullPayment = fullPayment
 
     validate(valid)

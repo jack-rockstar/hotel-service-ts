@@ -6,8 +6,8 @@ import { RentalDto } from '../validation/rental.dto'
 export class RentalMiddleware {
   private readonly httpReponse: HttpResponse = new HttpResponse()
 
-  rentalValidator (req: Request, res: Response, next: NextFunction): void {
-    const { status, roomId, guestId, userId, admissionDate, departureDate } = req.body
+  rentalValidator(req: Request, res: Response, next: NextFunction): void {
+    const { status, roomId, guestId, userId, admissionDate, departureDate, paymentInAdvance, fullPayment } = req.body
     const valid = new RentalDto()
 
     valid.status = status
@@ -16,6 +16,8 @@ export class RentalMiddleware {
     valid.userId = userId
     valid.admissionDate = admissionDate
     valid.departureDate = departureDate
+    valid.paymentInAdvance = paymentInAdvance
+    valid.fullPayment = fullPayment
 
     validate(valid)
       .then(err => {

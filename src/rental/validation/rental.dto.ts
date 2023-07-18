@@ -1,22 +1,28 @@
-import { BaseDto } from '../../config/base.dto'
 import { IsNotEmpty } from 'class-validator'
+import { BaseDto } from '../../config/base.dto'
 
 export class RentalDto extends BaseDto {
   @IsNotEmpty()
-    status!: string
+  status!: string
 
   @IsNotEmpty()
-    roomId!: string
+  roomId!: string
 
   @IsNotEmpty()
-    guestId!: string
+  guestId!: string
 
   @IsNotEmpty()
-    userId!: string
+  userId!: string
 
   @IsNotEmpty()
-    admissionDate!: Date
+  admissionDate!: Date
 
   @IsNotEmpty()
-    departureDate!: Date
+  departureDate!: Date
+
+  @IsNotEmpty()
+  paymentInAdvance!: String
+
+  @IsNotEmpty()
+  fullPayment!: String
 }
