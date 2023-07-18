@@ -37,11 +37,11 @@ export class RentalEntity extends BaseEntity {
   @Column()
   departureDate!: Date
 
-  @Column()
-  paymentInAdvance!: String
+  @Column({ type: 'numeric', precision: 10, scale: 2 })
+  paymentInAdvance!: number
 
-  @Column()
-  fullPayment!: String
+  @Column({ type: 'numeric', precision: 10, scale: 2 })
+  fullPayment!: number
 
   @OneToOne(() => BillingEntity, (billing) => billing.rental, { nullable: true })
   // @JoinColumn({ name: 'billing_id' })
