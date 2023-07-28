@@ -14,7 +14,7 @@ export class RoomEntity extends BaseEntity {
   @Column()
   status!: string
 
-  @Column()
+  @Column({ type: 'numeric', precision: 10, scale: 2 })
   priceRoom!: number
 
   @ManyToOne(() => RoomTypeEntity, (roomType) => roomType.bedRooms, { nullable: false })
