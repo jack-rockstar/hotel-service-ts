@@ -9,13 +9,15 @@ export class RentalRoutes extends BaseRoutes<RentalController, RentalMiddleware>
 
   routes(): any {
     this.router.get('/rental', (req, res) => {
-      this.controller.getRentals(req, res)
-        .catch((err: string) => console.log(`error getRental: ${err}`))
+      const { id } = req.query
+      if (!id) {
+        this.controller.getRentals(req, res)
+          .catch((err: string) => console.log(`Error getRental: ${err}`))
+      } else {
+        this.controller.getRentalById(req, res).catch((err: string) => `Error getRental: ${err}`)
+      }
     })
-    this.router.get('/rental/:id', (req, res) => {
-      this.controller.getRentalById(req, res)
-        .catch((err: string) => console.log(`error RentalId: ${err}`))
-    })
+
     this.router.post('/rental', (req, res, next) => [this.middleware.rentalValidator(req, res, next)], (req, res) => {
       this.controller.createRental(req, res)
         .catch((err: string) => console.log(`error createRental: ${err}`))

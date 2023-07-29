@@ -2,8 +2,8 @@ import { IsNotEmpty } from 'class-validator'
 import { BaseDto } from '../../config/base.dto'
 
 export class RentalDto extends BaseDto {
-  @IsNotEmpty()
-  status!: string
+  // @IsNotEmpty()
+  // status!: string
 
   @IsNotEmpty()
   roomId!: string
@@ -25,4 +25,9 @@ export class RentalDto extends BaseDto {
 
   @IsNotEmpty()
   fullPayment!: number
+}
+
+export enum StatusRental {
+  CANCELADO = '0',
+  PENDIENTE = '1'
 }

@@ -4,10 +4,15 @@ import { BaseEntity } from '../../config/base.entity'
 import { GuestEntity } from '../../guest/entities/guest.entity'
 import { RoomEntity } from '../../room/entities/room.entity'
 import { UserEntity } from '../../user/entities/user.entity'
+import { StatusRental } from '../validation/rental.dto'
 
 @Entity({ name: 'RENTAL' })
 export class RentalEntity extends BaseEntity {
-  @Column()
+  @Column({
+    type: 'enum',
+    enum: StatusRental,
+    default: StatusRental.PENDIENTE
+  })
   status!: string
 
   @Column({ name: 'room_id', nullable: false })
@@ -31,10 +36,10 @@ export class RentalEntity extends BaseEntity {
   @JoinColumn({ name: 'user_id' })
   user!: UserEntity
 
-  @Column()
+  @Column({ type: 'timestamptz' })
   admissionDate!: Date
 
-  @Column()
+  @Column({ type: 'timestamptz' })
   departureDate!: Date
 
   @Column({ type: 'numeric', precision: 10, scale: 2 })

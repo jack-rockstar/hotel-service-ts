@@ -7,10 +7,10 @@ export class RentalMiddleware {
   private readonly httpReponse: HttpResponse = new HttpResponse()
 
   rentalValidator(req: Request, res: Response, next: NextFunction): void {
-    const { status, roomId, guestId, userId, admissionDate, departureDate, paymentInAdvance, fullPayment } = req.body
+    const { roomId, guestId, userId, admissionDate, departureDate, paymentInAdvance, fullPayment } = req.body
     const valid = new RentalDto()
 
-    valid.status = status
+    // valid.status = status
     valid.roomId = roomId
     valid.guestId = guestId
     valid.userId = userId

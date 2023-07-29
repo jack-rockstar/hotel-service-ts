@@ -1,32 +1,40 @@
 import { DeleteResult, UpdateResult } from 'typeorm'
 import { BaseService } from '../../config/base.service'
 import { RentalEntity } from '../entities/rental.entity'
+import { getDescriptionById } from '../utils'
 import { RentalDto } from '../validation/rental.dto'
 
 export class RentalService extends BaseService<RentalEntity> {
-  constructor () {
+  constructor() {
     super(RentalEntity)
   }
 
-  async findAllRentals (): Promise<RentalEntity[]> {
+  async findAllRentals(): Promise<RentalEntity[]> {
     const repository = await this.execRepository
-    return await repository.find()
+    const data = await repository.find()
+    const rentalsWithDescription = data.map((rental) => ({
+      ...rental,
+      status: getDescriptionById(rental.status)
+    }))
+    return rentalsWithDescription
   }
 
-  async findRentalById (id: string): Promise<RentalEntity | null> {
+  async findRentalById(id: string): Promise<RentalEntity | null> {
     const repository = await this.execRepository
     try {
       const data = await repository.findOne({ where: { id } })
       if (data == null) throw new Error('No se encontro informacion con el ID especificado')
+      const status: string = getDescriptionById(data.status)
 
-      return data
+      const rental: RentalEntity = { ...data, status }
+      return rental
     } catch (error) {
       console.log(error)
       return null
     }
   }
 
-  async createRental (body: RentalDto): Promise<RentalEntity | any> {
+  async createRental(body: RentalDto): Promise<RentalEntity | any> {
     const repository = await this.execRepository
     try {
       const data = await repository.save(body)
@@ -37,7 +45,7 @@ export class RentalService extends BaseService<RentalEntity> {
     }
   }
 
-  async deleteRental (id: string): Promise<DeleteResult | null> {
+  async deleteRental(id: string): Promise<DeleteResult | null> {
     const repository = await this.execRepository
     try {
       const data: DeleteResult = await repository.delete({ id })
@@ -50,7 +58,7 @@ export class RentalService extends BaseService<RentalEntity> {
     }
   }
 
-  async updateRental (id: string, infoUpdate: RentalEntity): Promise<UpdateResult | null> {
+  async updateRental(id: string, infoUpdate: RentalEntity): Promise<UpdateResult | null> {
     const repository = await this.execRepository
     try {
       const data = await repository.update(id, infoUpdate)
