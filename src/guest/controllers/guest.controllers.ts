@@ -25,8 +25,9 @@ export class GuestController {
   async getGuestById(req: Request, res: Response): Promise<any> {
     try {
       console.log('===INITIALIZING API GET GUEST BY ID===')
-      const { id } = req.params
-      const data = await this.guestService.findGuestById(id)
+      const { id } = req.query
+      if (!id) return this.httpReponse.NotFound(res, 'No se envio el id del cliente')
+      const data = await this.guestService.findGuestById(id as string)
       if (data == null) {
         return this.httpReponse.NotFound(res, 'No se encontro informacion con el ID especificado')
       }
@@ -57,11 +58,20 @@ export class GuestController {
   async createGuest(req: Request, res: Response): Promise<any> {
     try {
       console.log('===INITIALIZING API CREATE GUEST===')
-      const data = await this.guestService.createGuest(req.body)
-      if (data.driverError?.name === 'error') {
-        return this.httpReponse.NotFound(res, data.driverError)
+      const guest = req.body
+      const guestId = guest.id
+      if (!guestId) {
+        const data = await this.guestService.createGuest(req.body)
+        if (data.driverError?.name === 'error') {
+          return this.httpReponse.NotFound(res, data.driverError)
+        }
+        return this.httpReponse.Ok(res, data)
+      } else {
+        const data: UpdateResult | null = await this.guestService.updateGuest(guestId, req.body)
+        if (data == null) return this.httpReponse.NotFound(res, 'No se encontro informacion con el ID especificado')
+        return this.httpReponse.Ok(res, data)
       }
-      return this.httpReponse.Ok(res, data)
+
     } catch (error) {
       console.log(error)
       return this.httpReponse.Error(res, error)
