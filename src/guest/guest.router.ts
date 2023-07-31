@@ -9,19 +9,28 @@ export class GuestRoutes extends BaseRoutes<GuestController, GuestMiddleware> {
 
   routes(): any {
     this.router.get('/guest', (req, res) => {
-      const { id } = req.query
+      const { id, typeDoc, numberDoc } = req.query
+
+      if (typeDoc && numberDoc) {
+        this.controller.getHuespedByDoc(req, res)
+          .catch((err: string) => console.log(`Error en buscar el usuario por documento: ${err} `))
+        return
+      }
+
       if (!id) {
         this.controller.getGuest(req, res)
           .catch((err: string) => console.log(`Error getGuests: ${err}`))
         return
       }
+
       this.controller.getGuestById(req, res)
         .catch((err: string) => console.log(`error getGuest by id: ${err}`))
     })
-    this.router.get('/guest', (req, res) => {
-      this.controller.getHuespedByDoc(req, res)
-        .catch((err: string) => console.log(`Error en buscar el usuario por documento: ${err} `))
-    })
+
+    // this.router.get('/guest', (req, res) => {
+    //   this.controller.getHuespedByDoc(req, res)
+    //     .catch((err: string) => console.log(`Error en buscar el usuario por documento: ${err} `))
+    // })
     // this.router.get('/guest/:id', (req, res) => {
     //   this.controller.getGuestById(req, res)
     //     .catch((err: string) => console.log(`error GuestId: ${err}`))
