@@ -4,19 +4,25 @@ import { BaseRoutes } from '../shared/routes/routes'
 import { AuthController } from './controllers/auth.controller'
 
 export class AuthRoutes extends BaseRoutes<AuthController, AuthMiddleware> {
-  constructor () {
+  constructor() {
     super(AuthController, AuthMiddleware)
   }
 
   private readonly httpResponse: HttpResponse = new HttpResponse()
 
-  public routes (): void {
+  public routes(): void {
     this.router.get('/', (_req, res) => {
       res.status(200).json({ status: 200, message: 'Service Currently' })
     })
 
-    this.router.post('/login', this.middleware.passAuth('login'), (req, res) => {
+    this.router.post('/login', (req, res) => {
       this.controller.login(req, res)
+        .catch((err: any) => {
+          this.httpResponse.Error(res, err)
+        })
+    })
+    this.router.get('/refresh', (req, res) => {
+      this.controller.refresh(req, res)
         .catch((err: any) => {
           this.httpResponse.Error(res, err)
         })
