@@ -58,16 +58,41 @@ export class GuestController {
   async createGuest(req: Request, res: Response): Promise<any> {
     try {
       console.log('===INITIALIZING API CREATE GUEST===')
-      const guest = req.body
-      const { guestId } = guest
-      if (!guestId) {
-        const data = await this.guestService.createGuest(req.body)
+      const {
+        typeDoc,
+        numberDoc,
+        name,
+        patLastname,
+        matLastname,
+        birthDate,
+        direction,
+        phone,
+        email,
+        guestId,
+        nationality
+      } = req.body
+      const guest: any = {}
+
+      guest.id = guestId
+      guest.typeDoc = typeDoc
+      guest.numberDoc = numberDoc
+      guest.birthDate = birthDate
+      guest.name = name
+      guest.matLastname = matLastname
+      guest.patLastname = patLastname
+      guest.direction = direction
+      guest.email = email
+      guest.phone = phone
+      guest.nationality = nationality
+
+      if (!guest.id) {
+        const data = await this.guestService.createGuest(guest)
         if (data.driverError?.name === 'error') {
           return this.httpReponse.NotFound(res, data.driverError)
         }
         return this.httpReponse.Ok(res, data)
       } else {
-        const data: UpdateResult | null = await this.guestService.updateGuest(guestId, req.body)
+        const data: UpdateResult | null = await this.guestService.updateGuest(guest.id, guest)
         if (data == null) return this.httpReponse.NotFound(res, 'No se encontro informacion con el ID especificado')
         return this.httpReponse.Ok(res, data)
       }
