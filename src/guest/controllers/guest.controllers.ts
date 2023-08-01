@@ -59,7 +59,7 @@ export class GuestController {
     try {
       console.log('===INITIALIZING API CREATE GUEST===')
       const guest = req.body
-      const guestId = guest.id
+      const { guestId } = guest
       if (!guestId) {
         const data = await this.guestService.createGuest(req.body)
         if (data.driverError?.name === 'error') {
