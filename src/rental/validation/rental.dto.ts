@@ -20,8 +20,8 @@ export class RentalDto extends BaseDto {
   @IsNotEmpty()
   departureDate!: Date
 
-  @IsNotEmpty()
-  paymentInAdvance!: number
+  // @IsNotEmpty()
+  // paymentInAdvance!: number
 
   @IsNotEmpty()
   fullPayment!: number
