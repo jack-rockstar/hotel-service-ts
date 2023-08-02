@@ -3,7 +3,7 @@ import { BaseDto } from '../../config/base.dto'
 
 export class RentalDto extends BaseDto {
   // @IsNotEmpty()
-  // status!: string
+  status!: string
 
   @IsNotEmpty()
   roomId!: string
@@ -21,7 +21,7 @@ export class RentalDto extends BaseDto {
   departureDate!: Date
 
   // @IsNotEmpty()
-  // paymentInAdvance!: number
+  paymentInAdvance!: number
 
   @IsNotEmpty()
   fullPayment!: number
