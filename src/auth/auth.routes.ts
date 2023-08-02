@@ -15,7 +15,7 @@ export class AuthRoutes extends BaseRoutes<AuthController, AuthMiddleware> {
       res.status(200).json({ status: 200, message: 'Service Currently' })
     })
 
-    this.router.post('/login', (req, res) => {
+    this.router.post('/login', this.middleware.passAuth('login'), (req, res) => {
       this.controller.login(req, res)
         .catch((err: any) => {
           this.httpResponse.Error(res, err)
