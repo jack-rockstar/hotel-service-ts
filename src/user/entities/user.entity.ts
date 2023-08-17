@@ -1,50 +1,50 @@
 // import { Exclude } from 'class-transformer'
+import { IsDateString } from 'class-validator'
 import { Column, Entity, OneToMany } from 'typeorm'
 import { BaseEntity } from '../../config/base.entity'
 import { RentalEntity } from '../../rental/entities/rental.entity'
 import { RoleType } from '../validation/user.dto'
-import { IsDateString } from 'class-validator'
 
 @Entity({ name: 'USER' })
 export class UserEntity extends BaseEntity {
   @Column()
-    typeDoc!: string
+  typeDoc!: string
 
   @Column({ unique: true })
-    numberDoc!: string
+  numberDoc!: string
 
   @Column()
-    name!: string
+  name!: string
 
   @Column()
-    patLastname!: string
+  patLastname!: string
 
   @Column()
-    matLastname!: string
+  matLastname!: string
 
-  @Column()
+  @Column({ type: 'date' })
   @IsDateString({ strict: true })
-    birthdate!: Date
+  birthdate!: Date
 
   @Column({ nullable: true })
-    direction?: string
+  direction?: string
 
   @Column({ nullable: true })
-    phone?: string
+  phone?: string
 
   @Column({ nullable: true })
-    email?: string
+  email?: string
 
   @Column({ unique: true })
-    user!: string
+  user!: string
 
   // @Exclude()
   @Column({ unique: true, select: false })
-    password!: string
+  password!: string
 
   @Column({ type: 'enum', enum: RoleType, nullable: false })
-    role!: RoleType
+  role!: RoleType
 
   @OneToMany(() => RentalEntity, (rental) => rental.user, { eager: true })
-    rentals!: RentalEntity[]
+  rentals!: RentalEntity[]
 }

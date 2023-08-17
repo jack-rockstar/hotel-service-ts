@@ -12,7 +12,6 @@ export class AuthService extends ConfigServer {
   ) {
     super()
   }
-
   public async validateUser(user: string, password: string): Promise<UserEntity | Boolean> {
     const userByEmail = await this.userService.findUserByEmail(user)
     const userByName = await this.userService.findUserByUser(user)

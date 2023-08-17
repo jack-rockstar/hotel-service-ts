@@ -23,7 +23,7 @@ RUN npm run m:gen -- src/migrations/InitDB
 
 RUN npm run m:run 
 
-#docker-compose up -d
+# docker-compose up -d
 # docker build --no-cache --progress=plain  -t hotel-service . 
 
 # arrancar image
